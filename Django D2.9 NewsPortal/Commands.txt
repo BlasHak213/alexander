@@ -1,0 +1,224 @@
+>>> from news.models import *
+>>> u1 = User.objects.create_user(username='Sancho')
+>>> u2 = User.objects.create_user(username='Pancho')
+>>> u1
+<User: Sancho>
+>>> u2
+<User: Pancho>
+>>> Author.objects.create(authorUser=u1)
+<Author: Author object (1)>
+>>> Author.objects.create(authorUser2=u2)   
+Traceback (most recent call last):
+  File "<console>", line 1, in <module>
+  File "C:\Users\Пользователь\PycharmProjects\Django3\venv\Lib\site-packages\django\db\models\manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Пользователь\PycharmProjects\Django3\venv\Lib\site-packages\django\db\models\query.py", line 656, in create
+    obj = self.model(**kwargs)
+          ^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Пользователь\PycharmProjects\Django3\venv\Lib\site-packages\django\db\models\base.py", line 567, in __init__
+    raise TypeError(
+TypeError: Author() got unexpected keyword arguments: 'authorUser2'
+>>> Author.objects.create(authorUser=u2)  
+<Author: Author object (2)>
+>>> Category.objects.create(name='Sport')
+<Category: Category object (1)>
+>>> Category.objects.create(name='Humor') 
+<Category: Category object (2)>
+>>> Category.objects.create(name='Music') 
+<Category: Category object (3)>
+>>> Category.objects.create(name='Art')   
+<Category: Category object (4)>
+>>> author = Author.objects.get(id=1)
+>>> author
+<Author: Author object (1)>
+>>> author2 = Author.objects.get(id=2) 
+>>> author
+<Author: Author object (1)>
+>>> author2
+<Author: Author object (2)>
+>>> Post.objects.create(author=author,categoryType='AR', title='top freshmen', text='who is the best freshmen in your opinion?')
+<Post: Post object (1)>
+>>> Post.objects.get(id=1)
+<Post: Post object (1)>
+>>> Post.objects.get(id=1).title()
+Traceback (most recent call last):
+  File "<console>", line 1, in <module>
+TypeError: 'str' object is not callable
+>>> Post.objects.get(id=1).title  
+'top freshmen'
+>>> Post.objects.create(author=author2,categoryType='AR', title='Messi GOAT', text='Messi got another Gold Ball. Is it deserved?')              
+<Post: Post object (2)>
+>>> Post.objects.get(id=2).title()                                                                                                 
+Traceback (most recent call last):
+  File "<console>", line 1, in <module>
+TypeError: 'str' object is not callable
+>>> Post.objects.get(id=2).title  
+'Messi GOAT'
+>>> Post.objects.create(author=author,categoryType='NW', title='New album', text='Aarne realeased new album')                      
+<Post: Post object (3)>
+>>> Post.objects.get(id=3).title                                                                              
+'New album'
+>>> Post.objects.get(id=1).postCategory.add(Category.object.get(id=3))
+Traceback (most recent call last):
+  File "<console>", line 1, in <module>
+AttributeError: type object 'Category' has no attribute 'object'
+>>> Post.objects.get(id=1).postCategory.add(Category.objects.get(id=3)) 
+>>> Post.objects.get(id=2).postCategory.add(Category.objects.get(id=1)) 
+>>> Post.objects.get(id=3).postCategory.add(Category.objects.get(id=3)) 
+>>> Post.objects.get(id=3).postCategory.add(Category.objects.get(id=4)) 
+>>> Comment.objects.create(commentPost=Post.objects.get(id=1),commentUser=Author.objects.get(id=2).authorUser, text='seems like KUOK going to blow our minds' 
+... 
+... Comment.objects.get(id=1)
+  File "<console>", line 1
+    Comment.objects.create(commentPost=Post.objects.get(id=1),commentUser=Author.objects.get(id=2).authorUser, text='seems like KUOK going to blow our minds'
+                          ^
+SyntaxError: '(' was never closed
+>>> Comment.objects.create(commentPost=Post.objects.get(id=1),commentUser=Author.objects.get(id=2).authorUser, text='seems like KUOK going to blow our minds')
+<Comment: Comment object (1)>
+>>> Comment.objects.get(id=1)                                                                                                                                  
+<Comment: Comment object (1)>
+>>> Comment.objects.create(commentPost=Post.objects.get(id=1),commentUser=Author.objects.get(id=1).authorUser, text='agree, he really knows his job')          
+<Comment: Comment object (2)>
+>>> Comment.objects.create(commentPost=Post.objects.get(id=2),commentUser=Author.objects.get(id=1).authorUser, text='of course he did, he is alien in football') 
+<Comment: Comment object (3)>
+>>> Comment.objects.create(commentPost=Post.objects.get(id=3),commentUser=Author.objects.get(id=2).authorUser, text='I liked more his first album, sry')         
+<Comment: Comment object (4)>
+>>> Comment.objects.get(id=1).like()
+>>> Comment.objects.get(id=1).rating
+1
+>>> Comment.objects.get(id=1).like() 
+>>> Comment.objects.get(id=1).like()
+>>> Comment.objects.get(id=1).dislike()
+>>> Comment.objects.get(id=2).like()    
+>>> Comment.objects.get(id=2).like()
+>>> Comment.objects.get(id=2).like()
+>>> Comment.objects.get(id=2).like()
+>>> Comment.objects.get(id=2).like()
+>>> Comment.objects.get(id=3).like() 
+>>> Comment.objects.get(id=3).dislike() 
+>>> Comment.objects.get(id=3).dislike()
+>>> Comment.objects.get(id=3).dislike()
+>>> Comment.objects.get(id=3).like()    
+>>> Comment.objects.get(id=2).like() 
+>>> Comment.objects.get(id=3).dislike() 
+>>> Comment.objects.get(id=1).rating    
+2
+>>> Comment.objects.get(id=2).rating 
+6
+>>> Comment.objects.get(id=3).rating 
+-2
+>>> Comment.objects.get(id=1).like()    
+>>> Comment.objects.get(id=1).rating 
+3
+>>> Author.objects.get(id=1)         
+<Author: Author object (1)>
+>>> a = Author.objects.get(id=1) 
+>>> a.update_rating()
+>>> a.ratingAuthor
+4
+>>> Comment.objects.get(id=1).rating                                                                                                                     
+3
+>>> Comment.objects.get(id=2).rating 
+6
+>>> Comment.objects.get(id=3).rating 
+-2
+>>> Author.objects.get(id=2)         
+<Author: Author object (2)>
+>>> a2 = Author.objects.get(id=2) 
+>>> a2.update_rating()               
+>>> a2.ratingAuthor
+3
+>>> Post.objects.get(id=1).like()
+>>> Post.objects.get(id=2).like() 
+>>> Post.objects.get(id=2).like()
+>>> Post.objects.get(id=3).dislike() 
+>>> Post.objects.get(id=3).like()    
+>>> Post.objects.get(id=3).dislike()
+>>> a.update_rating()
+>>> a.ratingAuthor
+4
+>>> a2.update_rating()               
+>>> a2.ratingAuthor    
+9
+>>> c = Author.objects.order_by('-ratingAuthor')[:1]
+>>> c
+<QuerySet [<Author: Author object (2)>]>
+>>> c.username
+Traceback (most recent call last):
+  File "<console>", line 1, in <module>
+AttributeError: 'QuerySet' object has no attribute 'username'
+>>> for i in c:                                      
+... i.ratingAuthor
+  File "<console>", line 2
+    i.ratingAuthor
+    ^
+IndentationError: expected an indented block after 'for' statement on line 1
+>>> for i in c:    
+...     i.ratingAuthor
+...     i.authorUser.username
+... 
+9
+'Pancho'
+>>> for i in c:
+...     i.dateCreation
+...     i.authorUser.username
+...     i.ratingAuthor
+...     i.title
+...     i.preview()
+... 
+Traceback (most recent call last):
+  File "<console>", line 2, in <module>
+AttributeError: 'Author' object has no attribute 'dateCreation'
+>>> for i in c:    ion    ame
+...            
+... 
+...     i.ra              ame
+... 
+Traceback (most recent call last):
+  File "<console>", line 4, in <module>
+AttributeError: 'Author' object has no attribute 'ra'
+>>> for i in c:
+...     i.authorUser.username
+...     i.ratingAuthor
+...       
+'Pancho'
+9
+>>> for i in c:
+...     i.title
+...     i.preview()
+... 
+Traceback (most recent call last):
+  File "<console>", line 2, in <module>
+AttributeError: 'Author' object has no attribute 'title'
+>>> bp = Post.objects.order_by(
+... '-rating')
+>>> bp = Post.objects.order_by('-rating')[:1]
+>>> bp
+<QuerySet [<Post: Post object (2)>]>
+>>> for i in bp: 
+...     i.author
+...     i.dateCreation
+...     i.rating
+...     i.title
+...     i.preview()
+... 
+<Author: Author object (2)>
+datetime.datetime(2023, 12, 1, 14, 33, 5, 419652, tzinfo=datetime.timezone.utc)
+2
+'Messi GOAT'
+'Messi got another Gold Ball. Is it deserved? ...'
+>>> com = Comment.objects.filter(commentPost=bp)
+>>> com
+<QuerySet [<Comment: Comment object (3)>]>
+>>> for i in com:
+...     i.dateCreation
+...     i.commentUser.username
+...     i.rating 
+...     i.text
+... 
+datetime.datetime(2023, 12, 1, 14, 55, 5, 821712, tzinfo=datetime.timezone.utc)
+'Sancho'
+-2
+'of course he did, he is alien in football'
+>>>
