@@ -5,7 +5,7 @@ from .models import Post, Category
 from .filters import PostFilter
 from .forms import NewsForm
 # from django.http import HttpResponseRedirect
-from django.contrib.auth.mixins import PermissionRequiredMixin
+from django.contrib.auth.mixins import PermissionRequiredMixin, LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_protect
 from django.db.models import Exists, OuterRef
@@ -133,6 +133,17 @@ class CategoryList(ListView):
         return context
 
 
+class SubscriptionsList(LoginRequiredMixin, ListView):
+    model = Category
+    ordering = 'category_name'
+    template_name = 'flatpages/subscriptions_list.html'
+    context_object_name = 'subscriptions'
+
+    def get_queryset(self):
+        queryset = Category.objects.all().order_by('name')
+        return queryset
+
+
 @login_required
 def subscribe(request, pk):
     user = request.user
@@ -140,4 +151,14 @@ def subscribe(request, pk):
     category.subscribers.add(user)
 
     message = 'Вы успешно подписались на рассылку новостей категории'
+    return render(request, 'flatpages/subscriptions.html', {'category': category, 'message': message})
+
+
+@login_required()
+def unsubscribe(request, pk):
+    user = request.user
+    category = Category.objects.get(id=pk)
+    category.subscribers.remove(user)
+
+    message = 'Вы успешно отписались от рассылки новостей категории '
     return render(request, 'flatpages/subscriptions.html', {'category': category, 'message': message})
