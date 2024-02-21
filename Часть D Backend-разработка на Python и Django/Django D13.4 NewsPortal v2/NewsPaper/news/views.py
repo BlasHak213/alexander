@@ -15,6 +15,13 @@ from django.core.cache import cache
 from django.utils.translation import gettext as _
 
 
+class Index(View):
+    def get(self, request):
+        string = _('Hello world')
+
+        return HttpResponse(string)
+
+
 class PostList(ListView):
     model = Post
     ordering = 'text'

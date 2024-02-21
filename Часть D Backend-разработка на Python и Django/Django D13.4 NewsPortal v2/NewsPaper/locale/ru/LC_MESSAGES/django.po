@@ -22,7 +22,7 @@ msgstr ""
 
 #: .\news\views.py:20
 msgid "Hello world"
-msgstr ""
+msgstr "Привет мир"
 
 #: .\templates\account\email\email_confirmation_message.txt:5
 #, python-format
