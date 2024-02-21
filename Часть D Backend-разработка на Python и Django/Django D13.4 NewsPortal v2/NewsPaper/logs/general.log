@@ -1,1 +1,2 @@
-2024-02-21 12:36:03,647 [INFO] C:\Users\Пользователь\PycharmProjects\Django3\venv\Lib\site-packages\django\utils\autoreload.py - Watching for file changes with StatReloader
+2024-02-21 14:03:52,099 [INFO] autoreload - Watching for file changes with StatReloader
+2024-02-21 14:04:08,385 [INFO] autoreload - C:\Users\Пользователь\PycharmProjects\Django3\NewsPaper\NewsPaper\settings.py changed, reloading.

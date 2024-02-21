@@ -188,6 +188,8 @@ DEFAULT_FROM_EMAIL = os.getenv('DEFAULT_FROM_EMAIL')
 
 SERVER_EMAIL = os.getenv('SERVER_EMAIL')
 
+ADMINS = ('Sanya', os.getenv('EMAIL_HOST_USER'))
+
 ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
 ACCOUNT_CONFIRM_EMAIL_ON_GET = True
 ACCOUNT_EMAIL_CONFIRMATION_EXPIRE_DAYS = 1
@@ -208,45 +210,55 @@ LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
     'formatters': {
-        'standard': {
-            'format': '%(asctime)s [%(levelname)s] %(pathname)s - %(message)s'
+        'console_format': {
+            'format': '%(asctime)s [%(levelname)s] %(message)s',
         },
-        'detailed': {
-            'format': '%(asctime)s [%(levelname)s] %(module)s - %(message)s\n%(exc_info)s'
+        'file_format': {
+            'format': '%(asctime)s [%(levelname)s] %(module)s - %(message)s',
         },
-        'security': {
-            'format': '%(asctime)s [%(levelname)s] %(module)s - %(message)s'
-        }
+        'error_file_format': {
+            'format': '%(asctime)s [%(levelname)s] %(message)s\n%(pathname)s\n%(exc_info)s',
+        },
+        'security_file_format': {
+            'format': '%(asctime)s [%(levelname)s] %(module)s - %(message)s',
+        },
+        'email_format': {
+            'format': '%(asctime)s [%(levelname)s] %(message)s\n%(pathname)s',
+        },
     },
     'handlers': {
         'console': {
             'level': 'DEBUG',
             'class': 'logging.StreamHandler',
-            'formatter': 'standard',
+            'formatter': 'console_format',
+            'filters': ['debug_only'],
         },
         'general_file': {
             'level': 'INFO',
             'class': 'logging.FileHandler',
             'filename': os.path.join(LOGGING_DIR, 'general.log'),
-            'formatter': 'standard',
+            'formatter': 'file_format',
+            'filters': ['not_debug'],
         },
         'errors_file': {
             'level': 'ERROR',
             'class': 'logging.FileHandler',
             'filename': os.path.join(LOGGING_DIR, 'errors.log'),
-            'formatter': 'detailed',
+            'formatter': 'error_file_format',
+            'filters': ['not_debug'],
         },
         'security_file': {
             'level': 'INFO',
             'class': 'logging.FileHandler',
             'filename': os.path.join(LOGGING_DIR, 'security.log'),
-            'formatter': 'security',
+            'formatter': 'security_file_format',
+            'filters': ['not_debug'],
         },
         'mail_admins': {
             'level': 'ERROR',
             'class': 'django.utils.log.AdminEmailHandler',
-            'include_html': False,
-            'formatter': 'detailed',
+            'formatter': 'email_format',
+            'filters': ['not_debug'],
         },
     },
     'loggers': {
@@ -269,6 +281,24 @@ LOGGING = {
             'handlers': ['security_file'],
             'level': 'INFO',
             'propagate': False,
+        },
+        'django.template': {
+            'handlers': ['errors_file'],
+            'level': 'ERROR',
+            'propagate': False,
+        },
+        'django.db.backends': {
+            'handlers': ['errors_file'],
+            'level': 'ERROR',
+            'propagate': False,
+        },
+    },
+    'filters': {
+        'debug_only': {
+            '()': 'django.utils.log.RequireDebugTrue',
+        },
+        'not_debug': {
+            '()': 'django.utils.log.RequireDebugFalse',
         },
     },
 }
