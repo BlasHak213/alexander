@@ -1,0 +1,34 @@
+{% extends 'index.html' %}
+
+{% block title %}
+Ad {{ ad.id }}
+{% endblock title %}
+
+{% block content %}
+
+<hr>
+<h1>{{ ad.title }}</h1>
+<br>
+<h2>{{ ad.text}}</h2>
+<hr>
+{% if ad.upload %}
+<img src="{{ ad.upload.url }}" alt="{{ ad.title }}">
+{% else %}
+    <p>Изображение не найдено</p>
+{% endif %}
+<br>
+<hr>
+<br>
+<h2>Отклики</h2>
+<br>
+    <ul>
+        {% for response in ad.responses.all %}
+            {% if response.accepted %}
+            <li>{{ response.text }} - от {{ response.user }}</li>
+            {% endif %}
+        {% empty %}
+            <li>Откликов нет.</li>
+        {% endfor %}
+    </ul>
+
+{% endblock content %}

@@ -1,0 +1,42 @@
+{% extends 'index.html' %}
+
+{% block title %}
+My AdResponses List
+{% endblock title %}
+
+
+{% block content %}
+<hr>
+<h1>Мои отклики</h1>
+<hr>
+<form method="get">
+        {{ filterset.form|safe }}
+    <br>
+        <input style="magin-top: 20px" type="submit" value="Выбрать объявление">
+    <br>
+</form>
+<hr>
+    <ul>
+        {% for response in responses %}
+            <li>
+               Отклик: {{ response.text }}
+                <br>
+                Пользователь: {{ response.user }}
+                <br>
+                Время: {{ response.date_creation }}
+                <form method="post">
+                    {% csrf_token %}
+                    <input type="hidden" name="response_id" value="{{ response.id }}">
+                    <br>
+                    <button type="submit" name="delete_response">Удалить</button>
+                    {% if not response.accepted %}
+                        <button type="submit" name="accept_response">Принять</button>
+                    {% endif %}
+                    <hr>
+                </form>
+            </li>
+        {% empty %}
+            <li>Нет откликов.</li>
+        {% endfor %}
+    </ul>
+{% endblock content %}

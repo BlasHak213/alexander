@@ -1,0 +1,17 @@
+{% extends 'index.html' %}
+
+{% block title %}
+Ad {{ ad.id }} Update
+{% endblock title %}
+
+{% block content %}
+<hr>
+<h1>Изменение объявления</h1>
+<hr>
+<form method="post">
+    {% csrf_token %}
+    {{ form.media }}
+    {{ form.as_p }}
+    <button type="submit">Принять изменения</button>
+</form>
+{% endblock content %}

@@ -1,0 +1,17 @@
+{% extends 'index.html' %}
+
+{% block title %}
+Ad {{ ad.id }} Create
+{% endblock title %}
+
+{% block content %}
+<hr>
+<h1>Создание объявления</h1>
+<hr>
+<form method="post">
+    {% csrf_token %}
+    {{ form.media }}
+    {{ form.as_p }}
+    <button type="submit">Создать объявление</button>
+</form>
+{% endblock content %}

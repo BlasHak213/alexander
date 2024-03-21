@@ -1,0 +1,65 @@
+<!DOCTYPE HTML>
+<!--
+	Dopetrope by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+{% autoescape off %}
+	<head>
+		<title>{% block title %} {% endblock title %}</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		{% load static %}
+        <link href="{% static 'css/main.css' %}" rel="stylesheet" />
+	</head>
+	<body class="homepage is-preload">
+		<div id="page-wrapper">
+
+			<!-- Header -->
+				<section id="header">
+					<span class="user">
+        {% if request.user.is_authenticated %}
+            Hello {{ request.user.username }}!
+            <a href="{% url 'logout' %}">Выйти</a>
+        {% else %}
+            <a href="{% url 'login' %}">Войти</a>
+						<a> or </a>
+			<a href="{% url 'signup' %}">Зарегистрироваться</a>
+        {% endif %}
+    </span>
+					<!-- Logo -->
+						<h1><a href="{% url 'ad_list' %}">Fan Ad Page</a></h1>
+
+					<!-- Nav -->
+						<nav id="nav">
+							<ul>
+								<li class="current"><a href="{% url 'ad_list' %}">Главная</a></li>
+								<li>
+									<a href="#">MMORPG</a>
+									<ul>
+										<li><a href="#">Lorem ipsum dolor</a></li>
+										<li><a href="#">Magna phasellus</a></li>
+										<li><a href="#">Etiam dolore nisl</a></li>
+										<li>
+											<a href="#">Phasellus consequat</a>
+											<ul>
+												<li><a href="#">Magna phasellus</a></li>
+												<li><a href="#">Etiam dolore nisl</a></li>
+												<li><a href="#">Veroeros feugiat</a></li>
+												<li><a href="#">Nisl sed aliquam</a></li>
+												<li><a href="#">Dolore adipiscing</a></li>
+											</ul>
+										</li>
+										<li><a href="#">Veroeros feugiat</a></li>
+									</ul>
+								</li>
+							</ul>
+							 <div class="container">
+            <div class="text-center mt-5">
+                {% block content %} {% endblock content %}
+            </div>
+        </div>
+	</body>
+{% endautoescape %}
+</html>

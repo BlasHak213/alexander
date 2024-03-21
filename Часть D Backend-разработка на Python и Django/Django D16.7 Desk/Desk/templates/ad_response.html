@@ -1,0 +1,16 @@
+{% extends 'index.html' %}
+
+{% block title %}
+Ad {{ ad.id }} Response
+{% endblock title %}
+
+{% block content %}
+<hr>
+<h1>Отклик на объявление</h1>
+<hr>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Отправить отклик</button>
+    </form>
+{% endblock content %}

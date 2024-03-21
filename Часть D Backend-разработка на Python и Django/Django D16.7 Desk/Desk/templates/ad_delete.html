@@ -1,0 +1,16 @@
+{% extends 'index.html' %}
+
+{% block title %}
+Ad {{ ad.id }} Delete
+{% endblock title %}
+
+{% block content %}
+<hr>
+<h1>Удаление объявления</h1>
+<hr>
+<form action="" method="post">
+    {% csrf_token %}
+    <p>Удалить пост "{{ object.title }}"?</p>
+    <input type="submit" value="Delete" />
+</form>
+{% endblock content %}
