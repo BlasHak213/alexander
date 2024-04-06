@@ -1,0 +1,86 @@
+.navigation{
+    float: right;
+    padding: 40px 80px;
+    height: 100%;
+}
+ 
+.navigation a{
+    height: 100%;
+    display: table;
+    float: left;
+    padding: 0px 20px;
+    text-decoration: none;
+}
+ 
+.navigation a li{
+    vertical-align: middle;
+    display: table-cell;
+    font-size: 20px;
+    color: white;
+}
+ 
+.navigation a:hover{
+    background-color: gray;
+    color: #101010;
+}
+
+.inner-header{
+    background-color: black;
+}
+
+.logo-container{
+    padding: 30px 0px 30px 50px;
+    color: white;
+    }
+
+.hobby{
+    color: blueviolet;
+    text-align: center;
+}
+
+.music {
+    width: 100%;
+}
+
+.music-pic {
+    float: left;
+    margin-left: 500px;
+    margin-right: 20px ;
+}
+
+.music h3 {
+    padding: 150px 500px;
+}
+
+hr {
+    clear: left;
+}
+
+.about{
+    color: blueviolet;
+    text-align: center;
+}
+
+.description{
+    width: 100%;
+}
+
+.me {
+    float: left;
+    margin-left: 500px;
+    margin-right: 20px ;
+    width: 450px;
+    height: 600px;
+}
+
+.description h3{
+    padding: 200px 500px;
+}
+
+.inst{
+    margin-left: 1000px;
+}
+
+.myinst {
+    text-align: center;
+}
