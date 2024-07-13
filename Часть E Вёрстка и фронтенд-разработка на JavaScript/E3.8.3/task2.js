@@ -9,27 +9,23 @@ Released under the MIT license: http://jsbin.mit-license.org
 <meta name="robots" content="noindex">
 
 <script id="jsbin-javascript">
-function countElements(arr) {
-    let evenCount = 0;
-    let oddCount = 0;
-    let zeroCount = 0;
-
-    arr.forEach(element => {
-        if (typeof element === 'number') {
-            if (element === 0) {
-                zeroCount++;
-            } else if (element % 2 === 0) {
-                evenCount++;
-            } else {
-                oddCount++;
-            }
-        }
-    });
-
-    console.log(`Количество чётных элементов: ${evenCount}`);
-    console.log(`Количество нечётных элементов: ${oddCount}`);
-    if (zeroCount > 0) {
-        console.log(`Количество нулевых элементов: ${zeroCount}`);
+function isPrimeNumber(num) {
+    if (typeof num !== 'number' || num > 1000) {
+        console.log("Данные неверны");
+        return;
     }
-}
+    
+    if (num <= 1) {
+        console.log("Число не является простым");
+        return;
+    }
+
+    for (let i = 2; i <= Math.sqrt(num); i++) {
+        if (num % i === 0) {
+            console.log("Число не является простым");
+            return;
+        }
+    }
+
+    console.log("Число является простым");
 </script>

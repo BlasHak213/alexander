@@ -9,9 +9,16 @@ Released under the MIT license: http://jsbin.mit-license.org
 <meta name="robots" content="noindex">
 
 <script id="jsbin-javascript">
-function createAdder(num1) {
-    return function(num2) {
-        return num1 + num2;
-    };
+function printNumbers(start, end) {
+    let current = start;
+
+    const intervalId = setInterval(() => {
+        console.log(current);
+        if (current === end) {
+            clearInterval(intervalId);
+        }
+        current++;
+    }, 1000);
 }
+
 </script>

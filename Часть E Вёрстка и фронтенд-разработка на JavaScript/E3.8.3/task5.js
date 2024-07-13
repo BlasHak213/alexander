@@ -9,16 +9,12 @@ Released under the MIT license: http://jsbin.mit-license.org
 <meta name="robots" content="noindex">
 
 <script id="jsbin-javascript">
-function printNumbers(start, end) {
-    let current = start;
-
-    const intervalId = setInterval(() => {
-        console.log(current);
-        if (current === end) {
-            clearInterval(intervalId);
-        }
-        current++;
-    }, 1000);
-}
-
+const power = (x, n) => {
+    if (n === 0) return 1;
+    let result = x;
+    for (let i = 1; i < n; i++) {
+        result *= x;
+    }
+    return result;
+};
 </script>
